@@ -18,7 +18,7 @@ En cours de réalisation.
 
 Je travaille sur la méthode permettant d'encoder le message binaire au sein de l'image.
 
-Lors du lancement du programme, l'utilisateur peut seulement visualiser l'image et encoder/décoder 
+Lors du lancement du programme, l'utilisateur peut seulement visualiser l'image et encoder 
 son message en binaire. 
 
 
@@ -28,6 +28,8 @@ son message en binaire.
 
 Pour lancer le programme :
 >> python main.py
+
+Ensuite choisir image.jpg et saisir votre message 
 
 
 
