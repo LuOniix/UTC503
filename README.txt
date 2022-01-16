@@ -1,35 +1,34 @@
 	==================================
-		LSB encryptor
+			LSB encryptor
 	==================================
 
 
-	| Explication du projet |
+	| Project explanation |
 
-L'objectif du programme est de dissimuler une information au sein d'une image.
-Il s'agit du principe de la stéganographie.
-La méthode de stéganographie dite LSB consiste à manipuler les bits de poids faible 
-d’un fichier afin de cacher des informations dans celui-ci sans altérer son apparence.
-
-
-	| Statue du projet |
+	The objective of the program is to hide information within an image.
+	This is the principle of steganography.
+	The steganography method known as LSB consists of manipulating the low-order bits 
+	of an image in order to hide information in it without altering its appearance.
 
 
-En cours de réalisation. 
+	| Project statue |
 
-Je travaille sur la méthode permettant d'encoder le message binaire au sein de l'image.
+	In progress.
 
-Lors du lancement du programme, l'utilisateur peut seulement visualiser l'image et encoder 
-son message en binaire. 
+	It remains to make the method allowing to decode the message hidden in the image.
+	As well as to add the verification of the messages entered by the user.
+
+	When the program is launched, the user will have to enter an image and then his message. 
+	The program allows to hide the message in the image and displays the image. 
 
 
+	| Installation and use of the project |
 
-	| Installation et Utilisation du projet |
 
+	To launch the program:
+	>> python main.py
 
-Pour lancer le programme :
->> python main.py
-
-Ensuite choisir image.jpg et saisir votre message 
+	Then choose image.jpg, enter your message and enter enter the name of the new image 
 
 
 
