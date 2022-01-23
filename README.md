@@ -20,11 +20,7 @@ The user can encode a message in an image as well as decode it.
 ## | Installation and use of the project |
 
 
-**Install the PIL package and the numpy package with the following commands:**
-
->> pip install pil
-
->> pip install numpy
+>> pip3 install -r requirements.txt
 
 
 **To launch the program**
