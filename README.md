@@ -25,7 +25,7 @@ The user can encode a message in an image as well as decode it.
 
 **To launch the program**
 
->> python lsb.py
+>> python3 lsb.py
 
 
 **Mode ⇒ Image encoding**
@@ -39,4 +39,5 @@ Choose the png image to find the hidden message
 
 	
 
-Lucy Gastebois
+
+Lucy 
