@@ -58,7 +58,7 @@ def encode(tab, width, height, total_Pixel, message, dest):
         for i in range(total_Pixel) :                                           # Browse the pixel array
             for j in range(3) :                                                 # Browse the bits for RGB 
 
-                if cmpt < len_msg :                                            # We stop when the whole message is hidden 
+                if cmpt < len_msg :                                             # We stop when the whole message is hidden 
 
                     tab[i][j] = int(bin(tab[i][j])[:-1] + msgBinary[cmpt], 2)   # (one does not touch the bit of strong point) and one adds a bit of the message to him 
                                                                                

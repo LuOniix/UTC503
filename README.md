@@ -16,23 +16,23 @@
 
 ## | Installation and use of the project |
 
-	Install the PIL package and the numpy package with the following commands:
+	**Install the PIL package and the numpy package with the following commands:**
 
-	>>`pip install pil`
+	>> pip install pil
 
-	>>`pip install numpy`
+	>> pip install numpy
 
 
-	To launch the program
+	**To launch the program**
 
 	>> python lsb.py
 
 
-	Mode  ⇒  Image encoding
+	**Mode  ⇒  Image encoding**
 
 	Choose the png image in which you want to hide your message. Then choose your message to hide.
 
-	Mode  ⇒ Image decoding
+	**Mode  ⇒ Image decoding**
 
 	Choose the png image to find the hidden message
 
