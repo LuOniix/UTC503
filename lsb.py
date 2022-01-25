@@ -29,7 +29,7 @@ def ascii_to_binary(message):
     Returns:
         binary, len_msg; the message in binary and its length
     """
-    message += "$3nd0"                                                           # end marker
+    message += "$3nd0"                                                            # end marker
     binary = ""
     for letter in message:
         binary += format(ord(letter), "08b")
@@ -50,22 +50,22 @@ def encode(tab, width, height, total_pixel, message, dest):
     """
     msg_binary, len_msg = ascii_to_binary(message)                               # call of the function
 
-    if len_msg > total_pixel:                                                  # Checks if the message can be hidden in the image
+    if len_msg > total_pixel:                                                    # Checks if the message can be hidden in the image
         print(' /!\ ERROR encode : message too long !')
         sys.exit(10)
 
     else:
-        count = 0                                                               # Compteur pixels
-        for i in range(total_pixel):                                           # Browse the pixel array
-            for j in range(3):                                                 # Browse the bits for RGB
+        count = 0                                                                # Compteur pixels
+        for i in range(total_pixel):                                             # Browse the pixel array
+            for j in range(3):                                                   # Browse the bits for RGB
 
-                if count < len_msg:                                            # We stop when the whole message is hidden
+                if count < len_msg:                                              # We stop when the whole message is hidden
 
                     tab[i][j] = int(bin(tab[i][j])[:-1] + msg_binary[count], 2)  # (one does not touch the bit of strong point) and one adds a bit of the message to him
                     count += 1
 
-        tab = tab.reshape(height, width, 3)                                     # Gives a new shape to an array without changing its data
-        encoding_image = Image.fromarray(tab.astype('uint8'), 'RGB')            # Save a numpy table in image format
+        tab = tab.reshape(height, width, 3)                                      # Gives a new shape to an array without changing its data
+        encoding_image = Image.fromarray(tab.astype('uint8'), 'RGB')             # Save a numpy table in image format
         encoding_image.save(dest)
         encoding_image.show()
 
@@ -82,24 +82,24 @@ def decode(tab, total_pixel):
     """
 
     bits_hidden = ""
-    for i in range(total_pixel):                                                # Browse the pixel array
-        for j in range(3):                                                      # Browse the bits for RGB
+    for i in range(total_pixel):                                                  # Browse the pixel array
+        for j in range(3):                                                        # Browse the bits for RGB
 
-            bits_hidden += (bin(tab[i][j]) [2:][-1])                             # Gets the hidden bits at the end of the line (low-bit)
+            bits_hidden += (bin(tab[i][j]) [2:][-1])                              # Gets the hidden bits at the end of the line (low-bit)
 
     bits_hidden = [bits_hidden[i:i+8] for i in range(0, len(bits_hidden), 8)]
 
-    end_marker = "$3nd0"                                                         # end marker
+    end_marker = "$3nd0"                                                          # end marker
     message = ""
 
-    for i, value in enumerate(bits_hidden):                                           # We look for the end marker to find the message
+    for i, value in enumerate(bits_hidden):                                       # We look for the end marker to find the message
         if message[-5:] == end_marker:
             break
         else:
             message += chr(int(value, 2))
 
     if end_marker in message:
-        print(f'The hidden message is : {message[:-5]}')                         # If the hidden message is found, it is displayed
+        print(f'The hidden message is : {message[:-5]}')                          # If the hidden message is found, it is displayed
     else:
         print('There is no hidden message found')
 
