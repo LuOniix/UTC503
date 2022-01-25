@@ -1,9 +1,9 @@
-# Imports
+import sys
 import numpy as np
 from PIL import Image
 
 
-def image_informations(image):
+def image_infos(image):
     """This function allows you to retrieve information about the image (dimensions and pixels).
 
     Args:
@@ -19,6 +19,7 @@ def image_informations(image):
     total_pixel = array_pixel.size//3                                            # Total pixels divided by 3 because RGB on 3 bytes
     return array_pixel, width_img, height_img, total_pixel
 
+
 def ascii_to_binary(message):
     """This function allows to pass the ASCII message in binary.
 
@@ -30,8 +31,8 @@ def ascii_to_binary(message):
     """
     message += "$3nd0"                                                           # end marker
     binary = ""
-    for c in message:
-        binary += format(ord(c), "08b")
+    for letter in message:
+        binary += format(ord(letter), "08b")
     len_msg = len(binary)
     return binary, len_msg
 
@@ -43,45 +44,46 @@ def encode(tab, width, height, total_pixel, message, dest):
         tab (tuple) : the pixel table
         width (int) : image size
         height (int) : image size
-        totalPix (int) : total number of pixels
+        total_pixel (int) : total number of pixels
         message (str) : hidden message
         dest (str) : name of the output image
     """
-    msgBinary, len_msg = ascii_to_binary(message)                               # call of the function
+    msg_binary, len_msg = ascii_to_binary(message)                               # call of the function
 
-    if len_msg > total_pixel :                                                  # Checks if the message can be hidden in the image
+    if len_msg > total_pixel:                                                  # Checks if the message can be hidden in the image
         print(' /!\ ERROR encode : message too long !')
-        exit(10)
+        sys.exit(10)
 
     else:
-        cmpt = 0                                                                # Compteur pixels
-        for i in range(total_pixel) :                                           # Browse the pixel array
-            for j in range(3) :                                                 # Browse the bits for RGB
+        count = 0                                                               # Compteur pixels
+        for i in range(total_pixel):                                           # Browse the pixel array
+            for j in range(3):                                                 # Browse the bits for RGB
 
-                if cmpt < len_msg :                                             # We stop when the whole message is hidden
+                if count < len_msg:                                            # We stop when the whole message is hidden
 
-                    tab[i][j] = int(bin(tab[i][j])[:-1] + msgBinary[cmpt], 2)   # (one does not touch the bit of strong point) and one adds a bit of the message to him
-                    cmpt += 1
+                    tab[i][j] = int(bin(tab[i][j])[:-1] + msg_binary[count], 2)  # (one does not touch the bit of strong point) and one adds a bit of the message to him
+                    count += 1
 
         tab = tab.reshape(height, width, 3)                                     # Gives a new shape to an array without changing its data
         encoding_image = Image.fromarray(tab.astype('uint8'), 'RGB')            # Save a numpy table in image format
         encoding_image.save(dest)
         encoding_image.show()
 
-def decode (tab, total_pixel):
+
+def decode(tab, total_pixel):
     """This function allows to decode the text in the image.
 
     Args:
         tab (tuple) : the pixel table
-        totalPix (int) : total number of pixels
+        total_pixel (int) : total number of pixels
 
     Returns:
         (tuple) arrayPixel, (int) widthImg, (int) heightImg
     """
 
     bits_hidden = ""
-    for i in range(total_pixel) :                                                # Browse the pixel array
-        for j in range(3) :                                                      # Browse the bits for RGB
+    for i in range(total_pixel):                                                # Browse the pixel array
+        for j in range(3):                                                      # Browse the bits for RGB
 
             bits_hidden += (bin(tab[i][j]) [2:][-1])                             # Gets the hidden bits at the end of the line (low-bit)
 
@@ -90,15 +92,15 @@ def decode (tab, total_pixel):
     end_marker = "$3nd0"                                                         # end marker
     message = ""
 
-    for i in range(len(bits_hidden)) :                                           # We look for the end marker to find the message
-        if message[-5:] == end_marker :
+    for i, value in enumerate(bits_hidden):                                           # We look for the end marker to find the message
+        if message[-5:] == end_marker:
             break
-        else :
-            message += chr(int(bits_hidden[i], 2))
+        else:
+            message += chr(int(value, 2))
 
-    if end_marker in message :
+    if end_marker in message:
         print(f'The hidden message is : {message[:-5]}')                         # If the hidden message is found, it is displayed
-    else :
+    else:
         print('There is no hidden message found')
 
 
@@ -120,57 +122,56 @@ def main():
 
     input_ok = False
 
-    while input_ok != True :
+    while not input_ok:
 
         choose = input("Please choose the mode (1 or 2) : ")
 
-        if choose == "1" :
+        if choose == "1":
 
             print('\nMode => Image encoding \n')
-            img = input("Please enter the path of the image in .png : " )
+            img = input("Please enter the path of the image in .png : ")
 
             if img[-4:] == ".png":
 
                 input_ok = True
-                array_Pixel, width_Img, height_Img, total_pixel = image_informations(img)
-                print(f'\nImage size : {width_Img} X {height_Img}')
+                array_pixel, width_img, height_img, total_pixel = image_infos(img)
+                print(f'\nImage size : {width_img} X {height_img}')
                 print(f'Total Pixels : {total_pixel}')
 
                 message = input("\nPlease enter the message to be hidden : ")
-                msg_Binary, len_msg = ascii_to_binary(message)
-                print(f'The binary representation is : {msg_Binary}')
+                msg_binary, len_msg = ascii_to_binary(message)
+                print(f'The binary representation is : {msg_binary}')
 
                 dest = input("\nPlease enter the name of the new image in .png encoder : ")
-                encode(array_Pixel, width_Img, height_Img, total_pixel, message, dest)
+                encode(array_pixel, width_img, height_img, total_pixel, message, dest)
                 print('\n >> Success! Encoded image << \n')
 
-            else :
+            else:
                 print('\n /!\ Input Error : .png /!\ ')
 
-        elif choose == "2" :
+        elif choose == "2":
 
-            print(f'\nMode => Image decoding \n')
-            img = input("Please enter the path of the image in .png : " )
+            print('\nMode => Image decoding \n')
+            img = input("Please enter the path of the image in .png : ")
 
             if img[-4:] == ".png":
 
                 input_ok = True
-                array_Pixel, width_Img, height_Img, total_pixel = image_informations(img)
-                print(f'\nImage size : {width_Img} X {height_Img}')
+                array_pixel, width_img, height_img, total_pixel = image_infos(img)
+                print(f'\nImage size : {width_img} X {height_img}')
                 print(f'Total Pixels : {total_pixel}')
 
-                message = decode(array_Pixel, total_pixel)
+                decode(array_pixel, total_pixel)
                 print('\n >> Success ! Decoded image << \n')
 
-            else :
+            else:
                 print('\n /!\ Input Error : .png /!\ \n')
 
-        if input_ok == False :
+        if not input_ok:
             print('\n /!\ Input Error /!\ \n >> restart your entry \n')
 
-
-
 # Calling the launch function
+
 
 if __name__ == '__main__':
     main()
