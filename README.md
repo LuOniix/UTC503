@@ -22,22 +22,37 @@ The user can encode a message in an image as well as decode it.
 
 >> pip3 install -r requirements.txt
 
+    Dependencies :
+        - numpy
+        - pillow
+
 
 **To launch the program**
 
 >> python3 lsb.py
 
 
+**Tutorial**
+
+
 **Mode ⇒ Image encoding**
 
 Choose the png image in which you want to hide your message. Then choose your message to hide.
+
+ ![Encoding]http://image.noelshack.com/fichiers/2022/04/2/1643133790-capture-d-ecran-1.png "Encoding").
+
 
 
 **Mode ⇒ Image decoding**
 
 Choose the png image to find the hidden message
 
-	
+ ![Decoding](/chemin/access/image.jpg "Titre de l'image").
 
+**ERROR**
+
+The user is required to enter the value "1" or "2" and an image with the extension .png.
+
+ ![Error](/chemin/access/image.jpg "Titre de l'image").
 
 Lucy 
